@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 export function useSmoothSectionScroll(navbarId = "main-navbar") {
   useEffect(() => {
-    const handler = (e: any) => {
+    const handler = (e: Event) => {
       let anchor = e.target as HTMLElement;
       while (anchor && anchor.tagName !== "A") {
         anchor = anchor.parentElement!;

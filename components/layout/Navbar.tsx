@@ -93,7 +93,7 @@ export function Navbar() {
           key={link.label}
           href={link.href}
           className="block py-2 px-2 rounded-lg text-lg font-medium text-gray-300 hover:bg-[#23242b] hover:text-[#5593f7] transition"
-          onClick={(e) => {
+          onClick={() => {
             setMenuOpen(false);
             setTimeout(() => {
               window.location.hash = link.href;
