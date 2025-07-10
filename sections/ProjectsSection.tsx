@@ -41,7 +41,7 @@ const projects = [
 
 export function ProjectsSection() {
   return (
-    <section className="w-full py-16 px-4 bg-transparent" id="projects">
+    <section className="w-full py-16 px-4 bg-transparent scroll-mt-20" id="projects">
       <h2 className="text-5xl font-extrabold text-center mb-3">
          <span className="text-white">Featured </span>
          <span className="text-[#5593f7]">Projects</span>

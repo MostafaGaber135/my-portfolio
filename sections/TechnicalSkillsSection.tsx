@@ -10,7 +10,7 @@ import { AiFillTool } from "react-icons/ai";
 
 export function TechnicalSkillsSection() {
   return (
-    <section className="w-full py-6 px-4 bg-transparent" id="skills">
+    <section className="w-full py-6 px-4 bg-transparent scroll-mt-20" id="skills">
       <h2 className="text-5xl font-extrabold text-center mb-3">
         <span className="text-white">Technical </span>
         <span className="text-[#5593f7]">Skills</span>

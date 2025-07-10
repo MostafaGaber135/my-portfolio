@@ -5,7 +5,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 export function HeroSection() {
   return (
     <>
-      <section className="flex flex-col items-center justify-center min-h-[75vh] py-12 bg-transparent" id="home">
+      <section className="flex flex-col items-center justify-center min-h-[75vh] py-12 bg-transparent scroll-mt-20" id="home">
         <h1 className="text-center">
           <span className="text-[#5593f7] font-extrabold text-7xl sm:text-8xl block leading-tight">
             Mostafa

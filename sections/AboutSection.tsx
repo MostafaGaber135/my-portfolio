@@ -4,7 +4,7 @@ import { MdLanguage } from "react-icons/md";
 
 export function AboutSection() {
   return (
-    <section className="max-w-6xl mx-auto py-16 px-4" id="about">
+    <section className="max-w-6xl mx-auto py-16 px-4 scroll-mt-20" id="about">
       <div className="text-center mb-14">
         <h2 className="text-5xl font-extrabold mb-4">
           <span className="text-white">About </span>

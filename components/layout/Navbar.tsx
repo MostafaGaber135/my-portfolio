@@ -1,112 +1,99 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuItem,
-} from "@/components/ui/navigation-menu";
-import { useSmoothSectionScroll } from "@/lib/useSmoothSectionScroll";
+import Link from "next/link";
 
-export function Navbar() {
+const navLinks = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Experience", href: "#experience" },
+  { name: "Contact", href: "#contact" },
+];
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useSmoothSectionScroll("main-navbar");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 30);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (menuOpen) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-  }, [menuOpen]);
-
-  const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Contact", href: "#contact" },
-  ];
+  const handleScrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    href: string
+  ) => {
+    e.preventDefault();
+    const section = document.querySelector(href);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setOpen(false);
+    }
+  };
 
   return (
     <nav
-      id="main-navbar"
       className={`
-        w-full top-0 left-0 z-50 fixed
+        fixed w-full top-0 z-50
         transition-all duration-300
-        ${scrolled ? "bg-[#111319]/80 backdrop-blur-md shadow-md" : "bg-transparent"}
+        ${scrolled ? "bg-[#16181bcc] backdrop-blur-lg shadow-md" : "bg-transparent"}
       `}
+      style={{
+        borderBottom: scrolled ? "1px solid #2224" : "none",
+      }}
     >
-      <div className="flex justify-between items-center max-w-8xl mx-auto px-4 sm:px-8 md:px-16 py-4">
-        <Link
-          href="#home"
-          className="font-bold text-lg sm:text-2xl text-[#5593f7] tracking-tight hover:opacity-80 transition"
-        >
-          Mostafa Gaber
+      <div className="max-w-6xl mx-auto flex items-center justify-between h-16 px-2 md:px-0">
+        {/* Logo */}
+        <Link href="#home" onClick={(e) => handleScrollToSection(e, "#home")}>
+          <span className="text-2xl font-bold text-blue-500">Mostafa Gaber</span>
         </Link>
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="flex gap-3 lg:gap-5 xl:gap-6">
-            {navLinks.map(link => (
-              <NavigationMenuItem key={link.label}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={link.href}
-                    className="text-gray-300 hover:text-[#5593f7] font-medium transition px-2 py-1 rounded"
-                  >
-                    {link.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-        <button
-          className="md:hidden text-[#5593f7] p-2 focus:outline-none z-50"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex space-x-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleScrollToSection(e, link.href)}
+              className="text-gray-300 hover:text-blue-400 transition font-medium"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Mobile Burger */}
+        <div className="md:hidden">
+          <button onClick={() => setOpen(!open)} aria-label="Open Menu">
+            {open ? (
+              <X size={28} className="text-blue-500" />
+            ) : (
+              <Menu size={28} className="text-blue-500" />
+            )}
+          </button>
+        </div>
       </div>
-      {menuOpen && (
-  <div className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm flex md:hidden">
-    <div className="absolute top-0 left-0 w-3/4 max-w-xs h-full bg-[#16181d] shadow-xl p-8 flex flex-col gap-4">
-      <div className="flex justify-between items-center mb-8">
-        <span className="font-bold text-xl text-[#5593f7]">Menu</span>
-        <button
-          className="text-gray-400 hover:text-[#5593f7]"
-          onClick={() => setMenuOpen(false)}
-        >
-          <X size={26} />
-        </button>
-      </div>
-      {navLinks.map(link => (
-        <a
-          key={link.label}
-          href={link.href}
-          className="block py-2 px-2 rounded-lg text-lg font-medium text-gray-300 hover:bg-[#23242b] hover:text-[#5593f7] transition"
-          onClick={() => {
-            setMenuOpen(false);
-            setTimeout(() => {
-              window.location.hash = link.href;
-            }, 10);
-          }}
-        >
-          {link.label}
-        </a>
-      ))}
-    </div>
-    <div className="absolute inset-0" onClick={() => setMenuOpen(false)} />
-  </div>
-)}
+
+      {/* Mobile Menu */}
+      {open && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-[#16181bcc] backdrop-blur-lg flex flex-col items-center space-y-6 py-6 shadow-lg transition">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={(e) => handleScrollToSection(e, link.href)}
+              className="text-gray-200 text-lg hover:text-blue-400 font-medium"
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

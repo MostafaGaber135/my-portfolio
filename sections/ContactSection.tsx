@@ -31,7 +31,7 @@ export function ContactSection() {
   };
 
   return (
-    <section className="w-full py-16 px-4 bg-transparent" id="contact">
+    <section className="w-full py-16 px-4 bg-transparent scroll-mt-20" id="contact">
       <h2 className="text-5xl font-extrabold text-center mb-2">
         <span className="text-white">Get In </span>
         <span className="text-[#5593f7]">Touch</span>

@@ -8,7 +8,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 
 export function ExperienceAndEducationSection() {
   return (
-    <section className="w-full py-16 px-4 bg-transparent" id="experience">
+    <section className="w-full py-16 px-4 bg-transparent scroll-mt-20" id="experience">
       <h2 className="text-5xl font-extrabold text-center mb-2">
         <span className="text-white">Experience &</span>
         <span className="text-[#5593f7]"> Education</span>
