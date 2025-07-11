@@ -6,13 +6,6 @@ export function Footer() {
         <div className="text-center text-xs sm:text-sm text-gray-400 font-medium backdrop-blur rounded-lg px-2 py-1.5 max-w-[97vw]">
           © {new Date().getFullYear()}
           <span className="text-white font-semibold"> Mostafa Gaber Ahmed</span>
-          . Built with
-          <span className="text-[#5593f7] font-semibold"> React</span>,
-          <span className="text-[#5593f7] font-semibold"> TypeScript</span>, and{" "}
-          <span className="font-semibold bg-gradient-to-r from-[#4fd1c5] via-[#5593f7] to-[#6d28d9] bg-clip-text text-transparent">
-            Tailwind CSS
-          </span>
-          .
         </div>
       </div>
     </footer>
