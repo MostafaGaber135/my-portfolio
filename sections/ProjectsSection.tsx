@@ -1,7 +1,10 @@
+"use client";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 
 const projects = [
- 
   {
     color: "#2ac9a0",
     title: "CozyKart",
@@ -39,7 +42,41 @@ const projects = [
   },
 ];
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function ProjectsSection() {
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    if (!cardsRef.current) return;
+    projects.forEach((_, idx) => {
+      const dir = idx % 2 === 0 ? 1 : -1;
+      gsap.fromTo(
+        cardsRef.current[idx],
+        {
+          opacity: 0,
+          y: 50,
+          rotate: dir * 6,
+          scale: 0.96,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: cardsRef.current[idx],
+            start: "top 85%",
+            once: true,
+          },
+          delay: idx * 0.14,
+        }
+      );
+    });
+  }, []);
+
   return (
     <section className="w-full py-16 px-4 bg-transparent scroll-mt-20" id="projects">
       <h2 className="text-5xl font-extrabold text-center mb-3">
@@ -50,8 +87,12 @@ export function ProjectsSection() {
         A showcase of my development work, from educational platforms to e-commerce solutions
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
-        {projects.map((project) => (
-          <ProjectCard key={project.title} {...project} />
+        {projects.map((project, idx) => (
+          <ProjectCard
+            key={project.title}
+            {...project}
+            ref={el => { cardsRef.current[idx] = el!; }}
+          />
         ))}
       </div>
       <div className="flex justify-center mt-4">

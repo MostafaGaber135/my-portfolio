@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 
 interface AboutCardProps {
   icon: ReactNode;
@@ -7,10 +7,12 @@ interface AboutCardProps {
   className?: string;
 }
 
-export function AboutCard({ icon, title, children, className = "" }: AboutCardProps) {
-  return (
+export const AboutCard = forwardRef<HTMLDivElement, AboutCardProps>(
+  ({ icon, title, children, className = "" }, ref) => (
     <div
+      ref={ref}
       className={`
+        opacity-0 scale-[0.97]
         rounded-2xl border border-[#22232a] bg-[#131417]/70
         p-4 sm:p-6 shadow-md transition
         hover:shadow-2xl
@@ -29,5 +31,6 @@ export function AboutCard({ icon, title, children, className = "" }: AboutCardPr
       </div>
       <div className="text-gray-300 text-lg">{children}</div>
     </div>
-  );
-}
+  )
+);
+AboutCard.displayName = "AboutCard";

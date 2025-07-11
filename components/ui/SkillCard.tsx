@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 
 interface SkillCardProps {
   icon: ReactNode;
@@ -7,10 +7,12 @@ interface SkillCardProps {
   className?: string;
 }
 
-export function SkillCard({ icon, title, skills, className = "" }: SkillCardProps) {
-  return (
+export const SkillCard = forwardRef<HTMLDivElement, SkillCardProps>(
+  ({ icon, title, skills, className = "" }, ref) => (
     <div
+      ref={ref}
       className={`
+        opacity-0 scale-[0.97]
         rounded-2xl border border-[#22232a] bg-[#181920]/80
         p-6 shadow-md transition
         hover:shadow-2xl
@@ -28,19 +30,20 @@ export function SkillCard({ icon, title, skills, className = "" }: SkillCardProp
       </div>
       <div className="flex flex-wrap gap-2">
         {skills.map((skill, idx) => (
-         <span
-         key={idx}
-         className="
-           bg-[#181920] text-gray-200 text-xs px-3 py-1 rounded-full font-semibold border border-[#23242b]
-           hover:bg-[#5593f7] hover:text-white
-           transition duration-150
-           cursor-pointer
-         "
-       >
-         {skill}
-       </span>
+          <span
+            key={idx}
+            className="
+              bg-[#181920] text-gray-200 text-xs px-3 py-1 rounded-full font-semibold border border-[#23242b]
+              hover:bg-[#5593f7] hover:text-white
+              transition duration-150
+              cursor-pointer
+            "
+          >
+            {skill}
+          </span>
         ))}
       </div>
     </div>
-  );
-}
+  )
+);
+SkillCard.displayName = "SkillCard";

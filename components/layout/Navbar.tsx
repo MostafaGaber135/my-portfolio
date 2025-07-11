@@ -48,12 +48,10 @@ export default function Navbar() {
       }}
     >
       <div className="max-w-6xl mx-auto flex items-center justify-between h-16 px-2 md:px-0">
-        {/* Logo */}
         <Link href="#home" onClick={(e) => handleScrollToSection(e, "#home")}>
           <span className="text-2xl font-bold text-blue-500">Mostafa Gaber</span>
         </Link>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8">
           {navLinks.map((link) => (
             <Link
@@ -67,7 +65,6 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Mobile Burger */}
         <div className="md:hidden">
           <button onClick={() => setOpen(!open)} aria-label="Open Menu">
             {open ? (
@@ -79,7 +76,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {open && (
         <div className="md:hidden absolute top-16 left-0 w-full bg-[#16181bcc] backdrop-blur-lg flex flex-col items-center space-y-6 py-6 shadow-lg transition">
           {navLinks.map((link) => (

@@ -1,18 +1,62 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { ContactCard } from "@/components/ui/ContactCard";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { MdEmail, MdPhone, MdLocationPin } from "react-icons/md";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
   const serviceID = "service_xfz0mrv";
   const templateID = "template_4lckofe";
   const publicKey = "htcNkndhmM3DrQiG2";
+
+  const cardRefs = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    const directions = [
+      { x: -120, y: 60, rotate: -18 }, 
+      { x: 120, y: 60, rotate: 18 }, 
+      { x: 0, y: 100, rotate: -12 },
+      { x: 0, y: -100, rotate: 12 }, 
+    ];
+    cardRefs.current.forEach((el, idx) => {
+      if (!el) return;
+      gsap.fromTo(
+        el,
+        {
+          opacity: 0,
+          scale: 0.75,
+          x: directions[idx]?.x ?? 0,
+          y: directions[idx]?.y ?? 0,
+          rotate: directions[idx]?.rotate ?? 0,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          x: 0,
+          y: 0,
+          rotate: 0,
+          duration: 0.75,
+          delay: idx * 0.18,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: "#contact",
+            start: "top 75%",
+            once: true,
+          },
+        }
+      );
+    });
+  }, []);
 
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +84,10 @@ export function ContactSection() {
         Let’s discuss your next project or explore opportunities to work together
       </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto h-full min-h-[520px]">
-        <ContactCard className="h-full flex flex-col">
+        <ContactCard
+          className="h-full flex flex-col"
+          ref={el => { cardRefs.current[0] = el!; }}
+        >
           <div className="text-white text-lg font-bold mb-4">Send a Message</div>
           <form
             ref={formRef}
@@ -100,7 +147,7 @@ export function ContactSection() {
         </ContactCard>
 
         <div className="flex flex-col gap-7">
-          <ContactCard>
+          <ContactCard ref={el => { cardRefs.current[1] = el!; }}>
             <div className="text-white text-lg font-bold mb-4">Contact Information</div>
             <div className="flex items-center gap-2 mb-2 text-gray-300">
               <MdEmail className="text-[#5593f7] text-2xl" />
@@ -118,7 +165,7 @@ export function ContactSection() {
               <span className="ml-auto text-white font-semibold">Cairo, Egypt</span>
             </div>
           </ContactCard>
-          <ContactCard>
+          <ContactCard ref={el => { cardRefs.current[2] = el!; }}>
             <div className="text-white text-lg font-bold mb-4">Connect With Me</div>
             <div className="flex gap-3 mb-3">
               <a href="https://github.com/MostafaGaber135" target="_blank" rel="noopener noreferrer" className="bg-[#22232a] rounded-full p-3 text-white hover:scale-110 transition">
@@ -135,7 +182,7 @@ export function ContactSection() {
               Availability: Open to new opportunities and collaborations. Currently based in Cairo, Egypt and available for remote work.
             </div>
           </ContactCard>
-          <ContactCard>
+          <ContactCard ref={el => { cardRefs.current[3] = el!; }}>
             <div className="text-white text-lg font-bold mb-3">Let's Work Together</div>
             <div className="text-gray-300 text-sm mb-1">I'm always interested in new projects and opportunities. Whether you need:</div>
             <ul className="list-disc pl-6 text-gray-300 text-sm space-y-1">

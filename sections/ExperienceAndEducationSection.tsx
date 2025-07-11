@@ -1,3 +1,7 @@
+"use client";
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaBriefcase, FaUserGraduate } from "react-icons/fa";
 import { ExpEduCard } from "@/components/ui/ExpEduCard";
 import { LiaCertificateSolid } from "react-icons/lia";
@@ -6,7 +10,32 @@ import { BsCalendar2DateFill } from "react-icons/bs";
 import { IoLocationSharp } from "react-icons/io5";
 import { AiOutlineGlobal } from "react-icons/ai";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export function ExperienceAndEducationSection() {
+  const cardsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    if (!cardsRef.current) return;
+    gsap.to(cardsRef.current, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotate: 0,
+      duration: 0.55,
+      stagger: 0.11,
+      ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: "#experience",
+        start: "top center",
+        once: true,
+        toggleActions: "play none none none"
+      },
+    });
+  }, []);
+
+  let cardIdx = 0;
+
   return (
     <section className="w-full py-16 px-4 bg-transparent scroll-mt-20" id="experience">
       <h2 className="text-5xl font-extrabold text-center mb-2">
@@ -23,7 +52,7 @@ export function ExperienceAndEducationSection() {
               <FaBriefcase className="text-[#5593f7] text-2xl" />
               Professional Experience
             </div>
-            <ExpEduCard>
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }}>
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-[#3a84e9] font-bold text-lg">
@@ -33,7 +62,6 @@ export function ExperienceAndEducationSection() {
                     ITI-Sohag Branch
                   </div>
                 </div>
-              
               </div>
               <div className="flex items-center gap-4 text-gray-400 text-xs mt-2 mb-2">
                 <BsCalendar2DateFill /> <span> Dec 2024 - Apr 2025</span>
@@ -61,7 +89,7 @@ export function ExperienceAndEducationSection() {
                 ))}
               </div>
             </ExpEduCard>
-            <ExpEduCard className="mt-5">
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }} className="mt-5">
               <div className="text-[#3a84e9] font-bold text-lg">
                 Summer Training Project
               </div>
@@ -69,8 +97,8 @@ export function ExperienceAndEducationSection() {
                 Online, Banque Misr
               </div>
               <div className="flex items-center gap-4 text-gray-400 text-xs mt-2 mb-2">
-              <BsCalendar2DateFill /><span>June 2021 - July 2021</span>
-              <AiOutlineGlobal />  <span>Online</span>
+                <BsCalendar2DateFill /><span>June 2021 - July 2021</span>
+                <AiOutlineGlobal />  <span>Online</span>
               </div>
               <div className="text-gray-300 text-sm mb-2">
                 Participated in an intensive summer training program focusing on
@@ -97,7 +125,7 @@ export function ExperienceAndEducationSection() {
               <FcTodoList className="text-[#5593f7] text-2xl" />
               Extracurricular Activities
             </div>
-            <ExpEduCard>
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }}>
               <div>
                 <span className="text-white font-bold">
                   Public Relations member
@@ -108,7 +136,7 @@ export function ExperienceAndEducationSection() {
               </div>
               <div className="text-gray-400 text-sm mb-2">VOP</div>
             </ExpEduCard>
-            <ExpEduCard className="mt-3">
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }} className="mt-3">
               <div>
                 <span className="text-white font-bold">IT member</span>
                 <span className="bg-[#23242b] text-white text-xs px-3 py-1 rounded-full ml-2 font-semibold">
@@ -125,7 +153,7 @@ export function ExperienceAndEducationSection() {
               <FaUserGraduate className="text-[#5593f7] text-2xl" />
               Education
             </div>
-            <ExpEduCard>
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }}>
               <div className="text-[#3a84e9] font-bold text-lg">
                 Bachelor's Degree in Computer and Information Technology
               </div>
@@ -133,8 +161,8 @@ export function ExperienceAndEducationSection() {
                 Egyptian E-Learning University, Asyut Branch
               </div>
               <div className="flex items-center gap-4 text-gray-400 text-xs mt-2 mb-2">
-              <BsCalendar2DateFill />  <span>2020-2024</span>
-              <IoLocationSharp /><span>Asyut, Egypt</span>
+                <BsCalendar2DateFill />  <span>2020-2024</span>
+                <IoLocationSharp /><span>Asyut, Egypt</span>
               </div>
               <div className="flex flex-wrap gap-4 mb-2 text-xs">
                 <div>
@@ -163,7 +191,7 @@ export function ExperienceAndEducationSection() {
               <LiaCertificateSolid className="text-[#5593f7] text-2xl" />
               Courses & Certificates
             </div>
-            <ExpEduCard>
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }}>
               <div className="flex justify-between items-center">
                 <div>
                   <div className="text-white font-bold">
@@ -176,7 +204,7 @@ export function ExperienceAndEducationSection() {
                 </span>
               </div>
             </ExpEduCard>
-            <ExpEduCard className="mt-3">
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }} className="mt-3">
               <div className="flex justify-between items-center">
                 <div>
                   <div className="text-white font-bold">
@@ -191,7 +219,7 @@ export function ExperienceAndEducationSection() {
                 </span>
               </div>
             </ExpEduCard>
-            <ExpEduCard className="mt-3">
+            <ExpEduCard ref={el => { cardsRef.current[cardIdx++] = el!; }} className="mt-3">
               <div className="flex justify-between items-center">
                 <div>
                   <div className="text-white font-bold">IC3 (Offline)</div>

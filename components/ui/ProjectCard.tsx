@@ -1,3 +1,4 @@
+import { ReactNode, forwardRef } from "react";
 import { FiGithub } from "react-icons/fi";
 import { RiShareBoxLine } from "react-icons/ri";
 
@@ -12,23 +13,28 @@ interface ProjectCardProps {
   className?: string;
 }
 
-export function ProjectCard({
-  color,
-  title,
-  description,
-  category,
-  tags,
-  codeUrl,
-  liveUrl,
-  className = "",
-}: ProjectCardProps) {
-  return (
+export const ProjectCard = forwardRef<HTMLDivElement, ProjectCardProps>(
+  (
+    {
+      color,
+      title,
+      description,
+      category,
+      tags,
+      codeUrl,
+      liveUrl,
+      className = "",
+    },
+    ref
+  ) => (
     <div
+      ref={ref}
       className={`
-        flex flex-col h-full
+        opacity-0
         rounded-2xl border border-[#23242b] bg-[#15161a]/70
         p-6 shadow-md
         transition-all duration-300
+        flex flex-col h-full
         group
         hover:shadow-[0_0_32px_2px_${color}]
         hover:border-[${color}]
@@ -91,5 +97,6 @@ export function ProjectCard({
         )}
       </div>
     </div>
-  );
-}
+  )
+);
+ProjectCard.displayName = "ProjectCard";
