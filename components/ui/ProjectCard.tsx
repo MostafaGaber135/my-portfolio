@@ -1,4 +1,4 @@
-import { ReactNode, forwardRef } from "react";
+import { forwardRef } from "react";
 import { FiGithub } from "react-icons/fi";
 import { RiShareBoxLine } from "react-icons/ri";
 
