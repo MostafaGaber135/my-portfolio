@@ -9,7 +9,7 @@ import { TechnicalSkillsSection } from "@/sections/TechnicalSkillsSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#111319]">
+    <div className="min-h-screen bg-[#111319] overflow-x-hidden">
       <Navbar />
       <HeroSection />
       <AboutSection/>
